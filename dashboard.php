@@ -9,12 +9,10 @@ $user_id = $_SESSION['user_id'];
 $error = '';
 $success = '';
 
-// Handle Group Creation
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'create_group') {
     $groupName = trim($_POST['group_name']);
     $members = $_POST['members'] ?? [];
     
-    // Filter empty members
     $members = array_filter($members, function($m) { return trim($m) !== ''; });
 
     if (empty($groupName)) {
@@ -43,7 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     }
 }
 
-// Fetch Groups
 $stmt = $pdo->prepare("
     SELECT g.*, 
     (SELECT COUNT(*) FROM members m WHERE m.group_id = g.id) as member_count,
@@ -83,7 +80,6 @@ $groups = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php endif; ?>
 
         <div class="grid-groups">
-            <!-- Create New Card -->
             <div class="group-card glass" style="display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; min-height: 200px; border-style: dashed;" onclick="openModal('createGroupModal')">
                 <div style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;">+</div>
                 <h3>Create New Group</h3>
@@ -102,7 +98,6 @@ $groups = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <div class="member-avatars">
                         <?php 
-                        // Fetch a few members for preview
                         $mStmt = $pdo->prepare("SELECT name FROM members WHERE group_id = ? LIMIT 3");
                         $mStmt->execute([$group['id']]);
                         while($m = $mStmt->fetch()) {
@@ -120,7 +115,6 @@ $groups = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 
-    <!-- Create Group Modal -->
     <div id="createGroupModal" class="modal">
         <div class="modal-content glass auth-card">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
@@ -170,7 +164,6 @@ $groups = $stmt->fetchAll(PDO::FETCH_ASSOC);
             container.appendChild(input);
         }
 
-        // Close modal on outside click
         window.onclick = function(event) {
             if (event.target.classList.contains('modal')) {
                 event.target.classList.remove('active');

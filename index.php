@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $pdo->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
             if ($stmt->execute([$username, $hash])) {
                 $success = "Account created! Please login.";
-                $action = 'login'; // Switch to login view
+                $action = 'login';
             } else {
                 $error = "Registration failed";
             }

@@ -1,11 +1,9 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #000000;
-    /* Black Background */
     margin: 0;
     padding: 0;
     color: #ffffff;
-    /* White Text */
 }
 
 .container {
@@ -14,11 +12,9 @@ body {
     padding: 20px;
 }
 
-/* Navigation */
 .navbar {
     background-color: #111;
     border-bottom: 2px solid #ff0000;
-    /* Red Border */
     padding: 15px 0;
     margin-bottom: 20px;
 }
@@ -33,7 +29,6 @@ body {
     font-size: 24px;
     font-weight: bold;
     color: #0000ff;
-    /* Blue Logo */
     text-shadow: 0 0 5px #0000ff;
     text-decoration: none;
 }
@@ -41,15 +36,11 @@ body {
 a {
     text-decoration: none;
     color: #4da6ff;
-    /* Light Blue links */
 }
 
-/* Cards and Layout */
 .glass {
     background-color: #1a1a1a;
-    /* Dark Grey Cards */
     border: 1px solid #0000ff;
-    /* Blue Border */
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 5px;
@@ -73,10 +64,8 @@ a {
     background-color: #222;
     transform: scale(1.02);
     border-color: #ff0000;
-    /* Red on hover */
 }
 
-/* Forms */
 .form-group {
     margin-bottom: 15px;
 }
@@ -86,7 +75,6 @@ a {
     margin-bottom: 5px;
     font-weight: bold;
     color: #ff0000;
-    /* Red Labels */
 }
 
 .form-control {
@@ -94,7 +82,6 @@ a {
     padding: 10px;
     background-color: #000;
     border: 1px solid #0000ff;
-    /* Blue Border */
     color: white;
     border-radius: 4px;
     box-sizing: border-box;
@@ -103,10 +90,8 @@ a {
 .form-control:focus {
     outline: none;
     border-color: #ff0000;
-    /* Red Focus */
 }
 
-/* Buttons */
 .btn {
     padding: 10px 20px;
     border: none;
@@ -120,7 +105,6 @@ a {
 
 .btn-primary {
     background-color: #0000ff;
-    /* Blue */
     color: white;
 }
 
@@ -136,11 +120,9 @@ a {
 
 .btn-danger {
     background-color: #ff0000;
-    /* Red */
     color: white;
 }
 
-/* Auth Pages */
 .auth-container {
     display: flex;
     justify-content: center;
@@ -161,7 +143,6 @@ a {
     background: #111;
     padding: 30px;
     border: 2px solid #ff0000;
-    /* Red Border for Login */
     color: white;
 }
 
@@ -186,10 +167,8 @@ a {
 
 .minimal-btn:hover {
     background-color: #ff0000;
-    /* Red on hover */
 }
 
-/* Group Details */
 .split-layout {
     display: flex;
     gap: 20px;
@@ -199,7 +178,6 @@ a {
     flex: 1;
     min-width: 300px;
     border-color: #ff0000;
-    /* Red Border for Sidebar */
 }
 
 .expense-list {
@@ -218,7 +196,6 @@ a {
     width: 30px;
     height: 30px;
     background-color: #0000ff;
-    /* Blue Avatar */
     color: white;
     border-radius: 50%;
     text-align: center;
@@ -228,7 +205,6 @@ a {
     font-weight: bold;
 }
 
-/* Modal */
 .modal {
     display: none;
     position: fixed;
@@ -261,7 +237,6 @@ a {
     width: 50px;
     height: 50px;
     background-color: #ff0000;
-    /* Red FAB */
     color: white;
     border-radius: 50%;
     border: 2px solid white;
@@ -270,14 +245,12 @@ a {
     box-shadow: 0 0 10px #ff0000;
 }
 
-/* Text Colors */
 .text-muted {
     color: #888;
 }
 
 .text-success {
     color: #00ff00;
-    /* Bright Green for money */
 }
 
 .text-danger {

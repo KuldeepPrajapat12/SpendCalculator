@@ -8,7 +8,6 @@ if (!isLoggedIn()) {
 $group_id = $_GET['id'] ?? 0;
 $user_id = $_SESSION['user_id'];
 
-// Verify ownership
 $stmt = $pdo->prepare("SELECT * FROM `groups` WHERE id = ? AND user_id = ?");
 $stmt->execute([$group_id, $user_id]);
 $group = $stmt->fetch();
@@ -20,8 +19,6 @@ if (!$group) {
 $error = '';
 $success = '';
 
-// Handle Add Expense
-// Handle Expense Actions
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     $action = $_POST['action'];
     
@@ -46,7 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         $amount = $_POST['amount'];
         $description = trim($_POST['description']);
         
-        // Verify expense belongs to group
         $check = $pdo->prepare("SELECT id FROM expenses WHERE id = ? AND group_id = ?");
         $check->execute([$expense_id, $group_id]);
         
@@ -71,7 +67,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     }
 }
 
-// Fetch Members and their total spend
 $stmt = $pdo->prepare("
     SELECT m.*, COALESCE(SUM(e.amount), 0) as total_paid 
     FROM members m 
@@ -82,7 +77,6 @@ $stmt = $pdo->prepare("
 $stmt->execute([$group_id]);
 $members = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Fetch Expenses
 $stmt = $pdo->prepare("
     SELECT e.*, m.name as member_name 
     FROM expenses e 
@@ -93,7 +87,6 @@ $stmt = $pdo->prepare("
 $stmt->execute([$group_id]);
 $expenses = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Calculations
 $total_group_spend = 0;
 foreach ($members as $m) {
     $total_group_spend += $m['total_paid'];
@@ -102,7 +95,6 @@ foreach ($members as $m) {
 $member_count = count($members);
 $per_person_share = $member_count > 0 ? $total_group_spend / $member_count : 0;
 
-// Calculate Settlements
 $settlements = [];
 if ($member_count > 0) {
     $debtors = [];
@@ -117,7 +109,6 @@ if ($member_count > 0) {
         }
     }
 
-    // Sort to simplify transactions
     usort($debtors, function($a, $b) { return $a['amount'] <=> $b['amount']; }); 
     usort($creditors, function($a, $b) { return $b['amount'] <=> $a['amount']; }); 
 
@@ -169,7 +160,6 @@ if ($member_count > 0) {
 
     <div class="container">
         <div class="split-layout">
-            <!-- Sidebar: Balances -->
             <div class="sidebar-card glass">
                 <h3 style="margin-bottom: 1.5rem;">Balances</h3>
                 <div style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
@@ -223,7 +213,6 @@ if ($member_count > 0) {
                 <?php endif; ?>
             </div>
 
-            <!-- Main: Expenses -->
             <div>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
                     <h3>Recent Expenses</h3>
@@ -267,10 +256,8 @@ if ($member_count > 0) {
         </div>
     </div>
 
-    <!-- FAB -->
     <button class="fab" onclick="resetModal(); openModal('expenseModal')">+</button>
 
-    <!-- Expense Modal -->
     <div id="expenseModal" class="modal">
         <div class="modal-content glass auth-card">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
@@ -306,7 +293,6 @@ if ($member_count > 0) {
         </div>
     </div>
 
-    <!-- Delete Form -->
     <form id="deleteForm" method="POST" style="display: none;">
         <input type="hidden" name="action" value="delete_expense">
         <input type="hidden" name="expense_id" id="deleteExpenseId">
@@ -323,7 +309,7 @@ if ($member_count > 0) {
         function closeModal(id) {
             document.getElementById(id).classList.remove('active');
             if (id === 'expenseModal') {
-                setTimeout(resetModal, 300); // Reset after animation
+                setTimeout(resetModal, 300);
             }
         }
 
